@@ -1,0 +1,30 @@
+@startuml
+title Functional Diagram - OntoConnectLM
+
+actor User
+
+package "OntoConnectLM" {
+    component "Ontology Design Assistance" as ODA
+    component "Automatic Extraction\nof Concepts and Relations" as AECR
+    component "Class Enrichment\n(from Text Corpus and Base Ontology)" as SE
+    component "Automatic Identification\nof Individuals (NER/RE)" as AII
+    component "Generation of \nBase Ontology in RDFS/OWL" as AGO
+    component "Knowledge Base Generation\n(RDFS/OWL)" as KBG
+    component "Alignment and Meta-data \nEnrichment via Wikidata / DBpedia" as AEWD
+    component "Ontology Evaluation" as EVAL
+
+    ODA --> AECR : triggers
+    AECR --> SE : concepts & relations
+    SE --> AII : provides entities & relations
+    SE --> AGO : enriched elements
+    AII --> KBG : creates individuals
+    AGO --> KBG : ontology
+    KBG --> AEWD : individuals to align
+    AGO --> AEWD : ontology to align
+    AEWD --> EVAL
+}
+
+EVAL --> User : results
+User --> ODA : starts design
+
+@enduml

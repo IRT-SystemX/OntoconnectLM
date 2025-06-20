@@ -1,0 +1,16 @@
+{
+    "name": null,
+    "input_variables": [
+        "entities",
+        "text"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "## Contexte : Vous \u00eates un assistant sp\u00e9cialis\u00e9 dans l'identification de relations entre entit\u00e9s dans un texte.\n## Instructions : Votre t\u00e2che consiste \u00e0 lier les entit\u00e9s pr\u00e9sent\u00e9es par des relations d'un certain type.\nL'extraction est ouverte : le nom des relations est libre.\n\n## Texte : Voici le texte dont les entit\u00e9s sont pr\u00e9sentes :\n{text}\n\n## Entit\u00e9s extraites avec leur type: \n{entities}\n\n## Consigne : Respecte les types d'entit\u00e9s indiqu\u00e9s dans la description des relations\n\n## Format de sortie : Maintenant renvoie toutes les relations pr\u00e9sentes dans le texte dans le format suivant l'exemple ci-dessous :\n```json\n[\n{{\"label\": \"label_relation1\",\n  \"head\": \"EntityA\",\n  \"head_type\" : \"TypeEntityA\",\n  \"tail\": \"EntityB\",\n  \"tail_type\" : \"TypeEntityB\"}},\n\n{{\"label\": \"label_relation2\",\n  \"head\": \"EntityC\",\n  \"head_type\" : \"TypeEntityC\",\n  \"tail\": \"EntityD\",\n  \"tail_type\" : \"TypeEntityD\"}}\n  ]\n```\n## Maintenant extraie les relations :\n",
+    "template_format": "f-string",
+    "validate_template": false,
+    "_type": "prompt"
+}

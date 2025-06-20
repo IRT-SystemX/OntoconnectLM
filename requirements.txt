@@ -1,0 +1,11 @@
+langchain 
+langchain-community 
+langchain-ollama
+pandas
+spacy
+spacy_dbpedia_spotlight
+rdflib
+owlready2
+owlapy
+SPARQLWrapper
+entity-fishing-client

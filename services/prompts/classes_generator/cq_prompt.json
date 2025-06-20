@@ -1,0 +1,17 @@
+{
+    "name": null,
+    "input_variables": [
+        "context",
+        "cq",
+        "texts"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "# Contexte : Vous \u00eates un assistant \u00e0 la conception d'ontologies. Une ontologie d\u00e9finit des concepts dans un domaine pr\u00e9cis. {context}\n# Instructions : Votre t\u00e2che consiste \u00e0 proposer des classes d\u00e9crivant le domaine pr\u00e9sent\u00e9 dans les textes.\n# Comptency questions : L'ontologie devra r\u00e9pondre aux Competency Questions suivantes :\n{cq}\n\n# Textes :\n\n{texts}\n\n# Format de sortie : Pr\u00e9sentez le r\u00e9sultat dans un format json comme suit :\n```json\n[\n\"Classe1\"\n\"Classe2\",\n\"Classe3\"\n]\n```\n",
+    "template_format": "f-string",
+    "validate_template": false,
+    "_type": "prompt"
+}

@@ -1,0 +1,16 @@
+{
+    "name": null,
+    "input_variables": [
+        "entity_types",
+        "sentence"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "# Contexte : Vous \u00eates un assistant sp\u00e9cialis\u00e9 dans l'identification d'entit\u00e9s dans un texte. Le sujet du texte est la gestion des r\u00e9seaux \u00e9lectriques.\n# Instruction : Vous devez extraire les notions pr\u00e9sentes dans le texte. Ne pas ajouter autre chose, pas de phrase d'introduction ni de conclusion.\nS\u00e9parer les entit\u00e9s lorsque cela est possible.\n\n# Types d'entit\u00e9s :\nIl faut consid\u00e9rer les entit\u00e9s de ces types :\n{entity_types}\n\n# Format : Renvoyer le r\u00e9sultat sous forme de dictionnaire json.\n\n# Exemple : \n\n```json\n[ \n{{\"type\" : \"date\" , \"value\" : \"20/06/2021\"}},\n{{\"type\" : \"border\" , \"value\" : \"Espagne\"}},\n{{\"type\" : \"actor\" , \"value\" : \"EDF\"}}\n]\n```\n\nMaintenant, c'est votre tour:\n\nTexte:\n\n{sentence}\n\nEntit\u00e9s:\n",
+    "template_format": "f-string",
+    "validate_template": false,
+    "_type": "prompt"
+}
