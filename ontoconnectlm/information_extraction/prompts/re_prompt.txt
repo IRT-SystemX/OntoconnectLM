@@ -1,0 +1,30 @@
+## Context: You are an assistant specializing in identifying relationships between entities in a text. {context_description}
+## Instructions: Your task is to link the entities presented by relations of a certain type.
+We're interested in the following relationships: 
+{relation_types}
+
+## Text: Here's the text whose entities are present:
+{text}
+
+## Entities previously extracted with their type: 
+{entities}
+
+## Instruction: Respect the entity types indicated in the relationship description.
+
+## Output format: Now return all relations present in the text in the format shown in the example below:
+```json
+[
+{{"label": "located at",
+ "head": "Coupure Longue",
+ "head_type" : "network_event",
+ "tail": "Palaiseau",
+ "tail_type" : "geographical_region"}},
+
+{{"label": "managed by",
+ "head": "Coupure Longue",
+ "head_type": "network_event",
+ "tail": "Centre IDF-Normandie",
+ "tail_type": "center_division"}}
+  ]
+````
+## Now extract the relationships :

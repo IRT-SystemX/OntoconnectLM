@@ -1,0 +1,20 @@
+# Context: You are an ontology design assistant. An ontology defines concepts in a specific domain. {context}
+
+# Instructions: Your task is to propose classes describing the domain presented in the texts.
+Several class proposals have been made. Your task is to merge these proposals into a coherent list.
+
+# Number : Try to keep around {nb_classes} classes
+
+# Classes already extracted : 
+
+{classes}
+
+
+# Output format: Return the result in a json format as follows:
+```json
+[
+"Class1"
+"Class2",
+"Class3"
+]
+````

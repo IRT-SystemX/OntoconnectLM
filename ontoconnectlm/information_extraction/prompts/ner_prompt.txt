@@ -1,0 +1,27 @@
+# Context: You are an assistant specialized in identifying entities in a text. {context_description}
+# Instruction: You must extract the concepts present in the text. Do not add anything else, no introductory or concluding sentences.
+Separate entities where possible.
+
+# Entity types:
+Consider entities of these types:
+{entity_types}
+
+# Format: Return the result as a json dictionary.
+
+# Example: 
+
+json
+[ 
+{{"type" : "date" value" : "20/06/2021"}},
+{{"type" : "border" , "value" : "Espagne"}},
+{{"type" : "actor" , "value" : "EDF"}}
+]
+```
+
+Now it's your turn:
+
+Text:
+
+{sentence}
+
+Entities:

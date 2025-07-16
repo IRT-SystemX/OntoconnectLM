@@ -1,0 +1,13 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT ?label ?subject ?sameAs ?abstract
+WHERE {{
+    <{resource}> rdfs:label ?label .
+    OPTIONAL {{ <{resource}> dct:subject ?subject . }}
+    OPTIONAL {{ <{resource}> owl:sameAs ?sameAs . }}
+    OPTIONAL {{ <{resource}> dbo:abstract ?abstract . FILTER (LANG(?abstract) IN ('fr','en')) }}
+    FILTER (LANG(?label) IN ('fr','en'))
+}}

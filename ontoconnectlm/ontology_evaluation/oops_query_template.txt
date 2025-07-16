@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OOPSRequest>
+    <OntologyUrl></OntologyUrl>
+    <OntologyContent><![CDATA[
+{owl_content}
+    ]]></OntologyContent>
+        <Pitfalls></Pitfalls>
+        <OutputFormat>RDF/XML</OutputFormat>
+    </OOPSRequest>
