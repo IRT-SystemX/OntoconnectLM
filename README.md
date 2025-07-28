@@ -28,8 +28,12 @@ cd OntoconnectLM
 ```
 2. install dependencies  
 ```bash
-#create a Python virtual enviroment if neccesary
-pip install -r requirements.text
+# create a Python virtual environment
+python3 -m venv ./venv
+source ./venv/bin/activate
+
+# Install python packages
+pip install -r requirements.txt
 ```
 3. Run the notebooks: Navigate to the examples/ folder and open the Jupyter notebooks.
 
