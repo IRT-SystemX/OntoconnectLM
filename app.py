@@ -134,33 +134,11 @@ with st.sidebar:
     st.markdown("# Configuration")
     _init_server_config("Configuration Ontology")
 
-    # with st.form("conf_file"):
-    #     st.markdown("Select a config file")
-    #     conf_file = st.file_uploader("Select a config file", accept_multiple_files=False, type=["yaml", "yml"], label_visibility="collapsed")
-    #     if st.form_submit_button("Apply", icon=":material/how_to_reg:"):
-    #         if conf_file:
-    #             conf_file_contents = conf_file.read().decode("utf-8")
-    #             yaml_data = yaml.safe_load(conf_file_contents)
-    #             st.session_state["CONF_FILE"] = yaml_data
-    #             st.session_state["SUCCESS_FLAG"] = True
-    #         else:
-    #             st.session_state["SUCCESS_FLAG"] = False
-    #     if st.session_state["SUCCESS_FLAG"] == True:
-    #         st.success("Config success!", icon=":material/task_alt:")
-    #     elif st.session_state["SUCCESS_FLAG"] == False:
-    #         st.error("Error loading", icon=":material/report:")
-    #     else:
-    #         st.warning("Need Configuration", icon=":material/warning:")
-
-# #############################################################################################
-# Parsing the yaml file directly instead of upload it.abs
 if st.session_state["SUCCESS_FLAG"] != True:
     yaml_file_path = r"/ontoconnectlm/streamlit/config/config.yaml"
     with open(yaml_file_path, 'r') as file:
         st.session_state["CONF_FILE"] = yaml.safe_load(file)
     st.session_state["SUCCESS_FLAG"] = True
-
-# #############################################################################################
 
 # Sidebar
 tab_options = [
@@ -302,7 +280,7 @@ elif selected_tab == "Step 3: Owl Generator":
             # Draw graph
             g = Graph()
             try:
-                g.parse(data=st.session_state["download_gen_owl"], format='xml')  # OWL files are typically in RDF/XML format
+                g.parse(data=st.session_state["download_gen_owl"], format='xml')
                 st.success("OWL content parsed successfully!")
             except Exception as e:
                 st.error(f"Failed to parse OWL content: {e}")
@@ -345,17 +323,11 @@ elif selected_tab == "Step 4: Classes Enricher":
     with st.form("oce"):
         if st.form_submit_button("Run Enricher", icon=":material/play_circle:"):
             with st.spinner("Wait for it...", show_time=False):
-                # TODO: refactor this
                 classEnricher_directory = r"/ontoconnectlm/streamlit/config/classe_enricher"
-                # dbpedia_output = r"/ontoconnectlm/streamlit/config/classe_enricher/dbpedia_EL_results.xlsx"
-                # wikidata_output = r"/ontoconnectlm/streamlit/config/classe_enricher/wikidata_EL_results.xlsx"
                 pop_onto = r"/tmp/owlGen_generated.owl"
                 enrich_onto = r"/ontoconnectlm/streamlit/config/classe_enricher/enrich_generated.owl"
                 if not os.path.exists(classEnricher_directory):
                     os.makedirs(classEnricher_directory)
-
-                # _del_file_if_exist(dbpedia_output)
-                # _del_file_if_exist(wikidata_output)
 
                 with open(pop_onto, "w") as f:
                     f.write(st.session_state["download_gen_owl"])
@@ -380,8 +352,6 @@ elif selected_tab == "Step 4: Classes Enricher":
                 # Write enrich_onto to enrich_onto file path
                 with open(enrich_onto, "w") as f:
                     f.write(result_ontology_enricher)
-
-                # ###################################################################
 
                 with st.status("Show owl generate file ..."):
                     # st.code(onto_linker.run(), language="text")

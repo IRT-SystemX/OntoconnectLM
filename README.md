@@ -280,4 +280,3 @@ curl "http://localhost:2222/rest/annotate?text=Paris&confidence=0.5"
 
 ## Licence  
 This project is under [MPL licence](./LICENSE).  
-
