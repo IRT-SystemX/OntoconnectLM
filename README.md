@@ -34,6 +34,9 @@ source ./venv/bin/activate
 
 # Install python packages
 pip install -r requirements.txt
+
+# Install spacy languages
+python -m spacy download fr_core_news_lg && python -m spacy download fr_core_news_sm
 ```
 #### 3. Run notebooks:  
 Navigate to the examples/ folder and open the Jupyter notebooks.
