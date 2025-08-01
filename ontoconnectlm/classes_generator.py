@@ -111,6 +111,7 @@ class ClassesGenerator:
         
     @staticmethod
     def decode_result(llm_result) -> list:
+        llm_result = str(llm_result)
         try:
             result = llm_result.split("```")[1]
             result = result.strip("json")
