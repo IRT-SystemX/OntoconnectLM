@@ -5,7 +5,7 @@ This component is part of the SMD project platform.
 ### Building docker image  
 ```bash
 # go to ontoconnectlm repo
-cd ontoconnectlm
+cd OntoconnectLM
 
 # Build docker image for running the tool and the user interface.
 docker build --rm -f ./docker/Dockerfile -t smd:latest .

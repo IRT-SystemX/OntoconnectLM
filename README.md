@@ -20,13 +20,13 @@ OntoConnectLM provides end-users with features to:
 ## Deployment Instructions  
 
 
-### Local installation 
-1. Clone this projet <OntoconnectLM>
+### Local Installation  
+#### 1. Clone this projet  
 ```bash 
 git clone https://github.com/IRT-SystemX/OntoconnectLM.git 
 cd OntoconnectLM
 ```
-2. install dependencies  
+#### 2. Install python dependencies  
 ```bash
 # create a Python virtual environment
 python3 -m venv ./venv
@@ -35,47 +35,31 @@ source ./venv/bin/activate
 # Install python packages
 pip install -r requirements.txt
 ```
-3. Run the notebooks: Navigate to the examples/ folder and open the Jupyter notebooks.
+#### 3. Run notebooks:  
+Navigate to the examples/ folder and open the Jupyter notebooks.
 
-### Building docker image  
+### Docker Installation  
 ```bash
-# go to ontoconnectlm repo
-cd ontoconnectlm
+# go to OntoconnectLM repo
+cd OntoconnectLM
 
 # Build docker image for running the tool and the user interface.
 docker build --rm -f ./docker/Dockerfile -t smd:latest .
 ```
 
-### Run docker image with its application automatically  
-by default it will run the application directly.
+#### Run notebooks in docker  
 ```bash
-docker run --rm -it -p 8501:8501 -v ${PWD}:/ontoconnectlm smd:latest
-```
-
-### Run docker image with its application manually  
-To do it manually, you can either run the notebooks or run the streamlit application inside the docker container.
-```bash
+# On your local terminal
 docker run --rm -it -p 8501:8501 -v ${PWD}:/ontoconnectlm smd:latest /bin/bash
-```
-#### Run notebook  
-Run the following command in the container:
-```bash
+
+# On the running docker container terminal
+cd /ontoconnectlm/examples
 jupyter notebook --allow-root
- ```
+```
 Than you need to open the link of jupyternotebook with its token in your favorite web browser.
 
-#### Run streamlit  
-Run the following command in the container:
-```bash
-streamlit run /ontoconnectlm/streamlit/app.py
-```
-
-## HMI descriptions  
-![alt text](images/ihm/image-0.png)  
-![alt text](images/ihm/image-1.png)  
-![alt text](images/ihm/image-2.png)  
-![alt text](images/ihm/image-3.png)  
-![alt text](images/ihm/image-4.png)
+### Web UI  
+OntoconnectLM has a streamlit application allowing users to ease communicate with the ontoconnect librairy.
 
 ## LLM setup
 
