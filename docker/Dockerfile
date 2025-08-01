@@ -18,4 +18,4 @@ RUN python -m spacy download fr_core_news_lg && python -m spacy download fr_core
 # EXPOSE 8501
 
 RUN echo "alias ll='ls -lah --color=auto'" >> ~/.bashrc
-CMD ["streamlit", "run", "/ontoconnectlm/streamlit/app.py", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "/ontoconnectlm/app.py", "--server.address=0.0.0.0"]
