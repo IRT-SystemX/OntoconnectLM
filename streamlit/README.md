@@ -22,7 +22,7 @@ docker run --rm -it -p 8501:8501 -v ${PWD}:/ontoconnectlm smd:latest
 ### Run docker image with its application manually  
 In case you need to debug, you can either run the notebooks or run the streamlit application inside the docker container manually.
 ```bash
-# Run the docker container
+# Run the docker container on your local terminal
 docker run --rm -it -p 8501:8501 -v ${PWD}:/ontoconnectlm smd:latest /bin/bash
 
 # Run the following notebook command in the container
