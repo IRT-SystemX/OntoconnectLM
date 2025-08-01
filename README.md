@@ -15,10 +15,10 @@ OntoConnectLM provides end-users with features to:
     - Enriched version
 - Evaluate the resulted ontology using semantic metrics
 
+## Installation and Deployment Guide  
+Two installation options are available: a ***local setup*** and a ***Docker based setup***.  
 
-
-## Deployment Instructions  
-
+>**<u>NOTE:</u>** You need the Docker based setup to the [Web UI](#web-ui).
 
 ### Local Installation  
 #### 1. Clone this projet  
@@ -40,10 +40,10 @@ Navigate to the examples/ folder and open the Jupyter notebooks.
 
 ### Docker Installation  
 ```bash
-# go to OntoconnectLM repo
+# Go to OntoconnectLM repo.
 cd OntoconnectLM
 
-# Build docker image for running the tool and the user interface.
+# Build docker image.
 docker build --rm -f ./docker/Dockerfile -t smd:latest .
 ```
 
@@ -58,17 +58,16 @@ jupyter notebook --allow-root
 ```
 Than you need to open the link of jupyternotebook with its token in your favorite web browser.
 
-### Web UI  
-OntoconnectLM has a streamlit application allowing users to ease communicate with the ontoconnect librairy.
+## Web UI  
+OntoConnectLM provides a Streamlit application that allows users to easily interact with the OntoConnect library.  
+Please follow the [instructions here](./streamlit/README.md) to run the Web UI.
 
-## LLM setup
-
+## LLM setup  
 Ontoconnectlm is available with any llm instance implementing the [Langchain BaseLLM interface](https://python.langchain.com/api_reference/core/language_models/langchain_core.language_models.llms.BaseLLM.html#langchain_core.language_models.llms.BaseLLM).
 
 Langchain is available with [a lot of LLM providers](https://python.langchain.com/docs/integrations/providers/), including Ollama, Huggingface, MistralAI, OpenAI.
 
 ### Example with Ollama
-`pip install langchain-ollama`
 
 ```python
 from langchain_ollama import OllamaLLM
