@@ -1,5 +1,6 @@
 from langchain_core.language_models.llms import BaseLLM
 from langchain_core.prompts import PromptTemplate
+from langchain_core.messages.ai import AIMessage
 from typing import List
 import numpy as np
 from tqdm import tqdm
@@ -70,7 +71,7 @@ class ClassesGenerator:
             prompt = PromptTemplate.from_template(template)
 
             if nb_classes == 0:
-                nb_classes = "Valeur non spécifiée. Le nombre de classes à générer est libre."
+                nb_classes = "Number of classes to generated not specified. Generation is set to free mode."
             else:
                 nb_classes = str(nb_classes)
 
@@ -97,7 +98,7 @@ class ClassesGenerator:
             cq_string = "\n".join(self.competency_questions)
 
             if nb_classes == 0:
-                nb_classes = "Valeur non spécifiée. Le nombre de classes à générer est libre."
+                nb_classes = "Number of classes to generated not specified. Generation is set to free mode."
             else:
                 nb_classes = str(nb_classes)
 
@@ -111,13 +112,17 @@ class ClassesGenerator:
         
     @staticmethod
     def decode_result(llm_result) -> list:
-        llm_result = str(llm_result)
+
+        # Case using OpenAI LLM
+        if isinstance(llm_result, AIMessage):
+            llm_result = llm_result.content
+        
         try:
             result = llm_result.split("```")[1]
             result = result.strip("json")
             return json.loads(result)
         except Exception as E:
-            print("Erreur de décodage des résultats : " , llm_result)
+            print("Erreur extracting result from json structured output : " , llm_result)
             print(E)
             return []
         
