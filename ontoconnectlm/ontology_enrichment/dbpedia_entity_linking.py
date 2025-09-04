@@ -28,7 +28,7 @@ class DBpedia_linking:
         self.dbpedia_sparql_endpoint = SPARQLWrapper(DBPEDIA_SPARQL_ENDPOINT)
 
         self.nlp = spacy.load('fr_core_news_lg')
-        self.nlp.add_pipe('dbpedia_spotlight', config={'language_code': "fr"})
+        self.nlp.add_pipe('dbpedia_spotlight', config={'language_code': "fr", 'dbpedia_rest_endpoint':'https://api.dbpedia-spotlight.org/fr/annotate'})
 
 
         # Loading dbpedia query
@@ -114,7 +114,10 @@ class DBpedia_linking:
                 # with pd.ExcelWriter(self.output_path, mode='a' if os.path.exists(self.output_path) else 'w') as writer:
                 #     df.to_excel(writer, sheet_name=cls.name[:31])
 
-        return pd.concat(enrichment_results)
+            if enrichment_results:
+                return pd.concat(enrichment_results)
+            else:
+                return pd.DataFrame()
         
 
 
