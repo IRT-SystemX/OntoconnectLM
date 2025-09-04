@@ -241,5 +241,42 @@ generator = ClassesGenerator(
     | Ontology must be available in HTML format | MINOR | PASSED
 
 
+
+## Local Deployment of DBpedia Spotlight (French)
+
+To enrich your ontologies with French DBpedia (Test Onto Enricher), you can deploy the DBpedia Spotlight service locally using Docker.
+
+### Docker Command
+
+```bash
+docker run -d -p 2222:80 dbpedia/dbpedia-spotlight spotlight-serve fr
+```
+
+## How to configure DBpedia Spotlight endpoint in your code
+
+To use your local DBpedia Spotlight service edit the dbpedia_entity_linking as follows:
+
+```python
+nlp.add_pipe('dbpedia_spotlight', config={'dbpedia_rest_endpoint': 'http://localhost:2222/rest'})
+```
+
+If you use another port or host, adjust the URL accordingly.
+
+### Official Documentation
+
+- Docker Hub: [https://hub.docker.com/r/dbpedia/dbpedia-spotlight](https://hub.docker.com/r/dbpedia/dbpedia-spotlight)
+- DBpedia Spotlight Documentation: [https://www.dbpedia-spotlight.org/installation/](https://www.dbpedia-spotlight.org/installation/)
+
+### Test Example
+
+To check if the service is running, open in your browser:  
+`http://localhost:2222/rest`
+
+Or use curl:
+```bash
+curl "http://localhost:2222/rest/annotate?text=Paris&confidence=0.5"
+```
+
+
 ## Licence  
 This project is under [MPL licence](./LICENSE).  
