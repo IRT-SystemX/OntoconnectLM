@@ -241,5 +241,35 @@ generator = ClassesGenerator(
     | Ontology must be available in HTML format | MINOR | PASSED
 
 
+## Déploiement local de DBpedia Spotlight français
+
+Pour enrichir vos ontologies avec DBpedia français (Test Onto Enricher), vous pouvez déployer le service DBpedia Spotlight en local via Docker.
+
+### Commande Docker
+
+```bash
+docker run -d -p 2222:80 dbpedia/dbpedia-spotlight spotlight-serve fr
+
+```
+
+L’API REST sera accessible sur :  
+`http://localhost:2222/rest`
+
+### Documentation officielle
+
+- Docker Hub : [https://hub.docker.com/r/dbpedia/dbpedia-spotlight](https://hub.docker.com/r/dbpedia/dbpedia-spotlight)
+- Documentation DBpedia Spotlight : [https://www.dbpedia-spotlight.org/installation/](https://www.dbpedia-spotlight.org/installation/)
+
+### Exemple de test
+
+Pour vérifier le fonctionnement, ouvrez dans votre navigateur :  
+`http://localhost:2222/rest`
+
+Ou utilisez curl :
+```bash
+curl "http://localhost:2222/rest/annotate?text=Paris&confidence=0.5"
+```
+
+
 ## Licence  
 This project is under [MPL licence](./LICENSE).  
