@@ -28,7 +28,7 @@ class DBpedia_linking:
         self.dbpedia_sparql_endpoint = SPARQLWrapper(DBPEDIA_SPARQL_ENDPOINT)
 
         self.nlp = spacy.load('fr_core_news_lg')
-        self.nlp.add_pipe('dbpedia_spotlight', config={'language_code': "fr", 'dbpedia_rest_endpoint':'https://api.dbpedia-spotlight.org/fr/annotate'})
+        self.nlp.add_pipe('dbpedia_spotlight', config={'language_code': "fr", 'dbpedia_rest_endpoint':'https://api.dbpedia-spotlight.org/fr/'})
 
 
         # Loading dbpedia query
