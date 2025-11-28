@@ -97,7 +97,7 @@ class Onto_Updater:
 
         # Regrouping results for same piece of text
         self.dbpedia_results = self.dbpedia_results.drop_duplicates(subset = ["Spot"], keep='first')
-        self.wikidata_results = self.wikidata_results.drop_duplicates(subset = ["Spot"], keep='first')
+        # self.wikidata_results = self.wikidata_results.drop_duplicates(subset = ["Spot"], keep='first')
 
         # Merging both dataframes
         sources_column = ["DBpedia"]*self.dbpedia_results.shape[0] + ["Wikidata"]*self.wikidata_results.shape[0]
