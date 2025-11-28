@@ -344,7 +344,7 @@ elif selected_tab == "Step 4: Classes Enricher":
                 st.markdown("#### -> Enriched OWL ontology generation")
                 updater = Onto_Updater(
                     dbpedia_results=DB_enricher_results,
-                    wikidata_results=Wiki_enricher,
+                    wikidata_results=Wiki_enricher_results,
                     ontology_content=st.session_state["download_gen_owl"]
                 )
                 result_ontology_enricher = updater.update_ontology(enrichment_mode="classes")
