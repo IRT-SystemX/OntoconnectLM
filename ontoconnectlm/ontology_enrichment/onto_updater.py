@@ -149,12 +149,15 @@ class Onto_Updater:
             
         # for spot_value in self.wikidata_results["Spot"]:
  
-        if spot_value in list_wikidata_spots:
- 
-            wikidata_index = self.wikidata_results["Spot"].to_list().index(spot_value)
-            wikidata_score = self.wikidata_results["Confidence Score"].to_list()[wikidata_index]
-            wikidata_score = float(wikidata_score)
- 
+        for spot_value in list_wikidata_spots:
+
+            # Skip if already handled in previous loop
+            if spot_value in best_matches:
+                continue
+
+            wikidata_index = list_wikidata_spots.index(spot_value)
+            wikidata_score = float(self.wikidata_results["Confidence Score"].to_list()[wikidata_index])
+
             if wikidata_score >= threshold:
                 best_matches[spot_value] = self.wikidata_results.iloc[wikidata_index].to_dict()
                 best_matches[spot_value]["Source"] = "Wikidata"
