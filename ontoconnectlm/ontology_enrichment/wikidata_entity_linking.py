@@ -134,6 +134,11 @@ class Wikidata_linking:
                 df = pd.DataFrame(results)
                 enrichment_results.append(df)
 
+        print("=======================")
+        print("=======================")
+        print(enrichment_results)
+        print("=======================")
+        print("=======================")
         return pd.concat(enrichment_results)
 
 
