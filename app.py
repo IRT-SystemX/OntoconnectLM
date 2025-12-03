@@ -120,6 +120,7 @@ caching_variables_states_dict = {
     "ER_classes_generator" : [],
     "CONF_FILE" : None,
     "SUCCESS_FLAG" : None,
+    "user_input_cnt" : 0,
 
     }
 
@@ -182,16 +183,23 @@ if selected_tab == "Step 1: Entity Recognition":
             col1, col2 = st.columns(2)
             user_input_txt = ""
             if col1.form_submit_button("Add User Text", icon=":material/add_circle:"):
-                st.session_state["ER_texts"].append(user_input_txt)
+                st.session_state["user_input_cnt"] += 1
+                # st.rerun()
             if col2.form_submit_button("Del User Text", icon=":material/delete:"):
-                del st.session_state["ER_texts"][-1]
+                st.session_state["user_input_cnt"] -= 1
+                # st.rerun()
 
-            for index, text_value in enumerate(st.session_state["ER_texts"]):
-                st.session_state["ER_texts"][index] = st.text_area(f"User Text #{index + 1}", value=text_value, height=2*68)
+            _list_er_texts = []
+            for index in range(0 , st.session_state["user_input_cnt"]):
+                _list_er_texts.append(st.text_area(f"User Text #{index + 1}", height=2*68, key=10900+ 36*index))
 
-        class_number = st.number_input("Maximim number of concepts", step=1)
+            class_number = st.number_input("Maximim number of concepts", step=1)
+
+            if st.form_submit_button("Validate", icon=":material/check:"):
+                st.session_state["ER_texts"] = _list_er_texts.copy()
 
         if st.button("Generate", icon=":material/refresh:"):
+
             with st.spinner("Wait for it...", show_time=False):
                 if st.session_state["CONF_FILE"]["competency_questions"]:
                     generator = ClassesGenerator(
@@ -233,7 +241,6 @@ elif selected_tab == "Step 2: Triples Extractor":
                     relation_types=relation_types,
                     relation_descriptions = relation_descriptions
                 )
-
                 st.session_state["triples_list_demo"] = extractor.run(texts)
                 st.session_state["triples_list_demo_2"] = []
                 for i in st.session_state["triples_list_demo"]:
@@ -331,7 +338,7 @@ elif selected_tab == "Step 4: Classes Enricher":
 
                 with open(pop_onto, "w") as f:
                     f.write(st.session_state["download_gen_owl"])
-                
+
                 # ###################################################################
                 st.markdown("#### -> DBpedia metadata collection")
                 DB_enricher = DBpedia_linking()
