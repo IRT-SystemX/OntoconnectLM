@@ -35,7 +35,7 @@ class Wikidata_linking:
     def extract_wikidata_metadata(self, resource):
  
         query = self.wikidata_query.format(resource=resource)
- 
+        # print("Sending wikidata query for resource : ", resource)
         sparql = SPARQLWrapper(self.wikidata_endpoint)
         sparql.setQuery(query)
         sparql.setReturnFormat(JSON)
@@ -45,27 +45,32 @@ class Wikidata_linking:
             data ={'wikimetadata': []}
  
             for result in results['results']['bindings']:
-                    entry={}
-                    if 'label' in result:
-                            entry['label']=result['label']['value']
-                    if 'instanceof' in result: 
-                            entry['instanceof']=result['instanceof']['value']
-                    if 'description' in result: 
-                            entry['description']=result['description']['value']
-                    if 'image' in result:
-                            entry['image']=result['image']['value']
-                    if 'googleid' in result:
-                            entry['googleid']=result['googleid']['value']
-                    data['wikimetadata'].append(entry)
+                entry={}
+                if 'label' in result:
+                    entry['label']=result['label']['value']
+                if 'instanceof' in result: 
+                    entry['instanceof']=result['instanceof']['value']
+                if 'description' in result: 
+                    entry['description']=result['description']['value']
+                if 'image' in result:
+                    entry['image']=result['image']['value']
+                if 'googleid' in result:
+                    entry['googleid']=result['googleid']['value']
+
+                data['wikimetadata'].append(entry)
+
+            print("Found medatata for ", resource)
             return data    
         except Exception as e:
-                print("Une erreur s'est produite :", str(e))
+                print("Erreur lors de la récupération de métadonnées wikidata :", str(e))
         return None
  
     
-    def process_individuals(self, cls):
+    def process_individuals(self, ontology_class):
+        print("Processing class : ", )
         results = []
-        for individual in cls.instances():
+        for individual in ontology_class.instances():
+            # print("Processing individual : ", individual)
             value = str(individual.has_text)
  
             if value is not None and value != "":
@@ -128,7 +133,8 @@ class Wikidata_linking:
                 enrichment_results.append(df)
  
  
-            if enrichment_results:
-                return pd.concat(enrichment_results)
-            else:
-                return pd.DataFrame()
+        if enrichment_results:
+            return pd.concat(enrichment_results)
+        else:
+            print("Finally, there is no wikidata result.")
+            return pd.DataFrame()
