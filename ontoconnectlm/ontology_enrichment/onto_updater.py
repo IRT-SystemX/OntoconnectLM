@@ -89,7 +89,7 @@ class Onto_Updater:
 
  
     def preprocess_nel_results(self) -> None:
- 
+
         # Regrouping results for same piece of text
         self.dbpedia_results = self.dbpedia_results.drop_duplicates(subset = ["Spot"], keep='first')
         self.wikidata_results = self.wikidata_results.drop_duplicates(subset = ["Spot"], keep='first')
@@ -102,14 +102,17 @@ class Onto_Updater:
         self.all_results = all_df
  
     def find_best_matches(self, threshold : float = 0.7) -> dict:
- 
+         
         if self.dbpedia_results.empty:
             list_dbpedia_spots = []
+            print("Empty dbpedia results")
         else:
             list_dbpedia_spots = self.dbpedia_results["Spot"].to_list()
  
         if self.wikidata_results.empty:
             list_wikidata_spots = []
+            print("Empty wikidata results")
+
         else:
             list_wikidata_spots = self.wikidata_results["Spot"].to_list()
  
@@ -134,6 +137,7 @@ class Onto_Updater:
                     best_matches[spot_value] = self.wikidata_results.iloc[wikidata_index].to_dict()
                     best_matches[spot_value]["Source"] = "Wikidata"
                 else:
+                    print("Skipping value cause inferior to threshold")
                     pass
  
             # Case where value is only found in DBpedia
@@ -214,7 +218,7 @@ class Onto_Updater:
                         if prop_value and onto_prop:
                             setattr(NewClass, onto_prop, prop_value)
  
-                    # print(f" Label nouvelle classe créée : {best_label}")
+                    print(f" Label nouvelle classe créée : {best_label}")
                     # print(f"Source : {spot_info["Source"]}")
                     # print(f"Propriétés: {props}")
  
@@ -238,6 +242,7 @@ class Onto_Updater:
                                     k: v for k, v in spot_info.items()
                                     if k.lower() in self.editprop_map
                                     }
+                                
                                 for prop_name, prop_value in properties.items():
                                     prop_name = self.editprop_map.get(prop_name.lower())
                                     onto_prop = getattr(self.ontology, prop_name)
