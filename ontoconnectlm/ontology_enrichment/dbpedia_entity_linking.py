@@ -28,7 +28,7 @@ class DBpedia_linking:
         self.dbpedia_sparql_endpoint = SPARQLWrapper(DBPEDIA_SPARQL_ENDPOINT)
 
         self.nlp = spacy.load('fr_core_news_lg')
-        self.nlp.add_pipe('dbpedia_spotlight', config={'language_code': "fr", 'dbpedia_rest_endpoint':'https://api.dbpedia-spotlight.org/fr/'})
+        self.nlp.add_pipe('dbpedia_spotlight', config={'language_code': "fr", 'dbpedia_rest_endpoint':'https://api.dbpedia-spotlight.org/fr'})
 
 
         # Loading dbpedia query
@@ -39,6 +39,7 @@ class DBpedia_linking:
 
     def extract_dbpedia_metadata(self, resource):
 
+        # print("Sending metadata request for : ", resource)
         query = self.dbpedia_query.format(resource=resource)
 
         self.dbpedia_sparql_endpoint.setQuery(query)
@@ -68,28 +69,32 @@ class DBpedia_linking:
             value = str(getattr(individual, 'has_text',None))
             if not value:
                 continue
+            # print("Processing individual : ", value)
             doc = self.nlp(value)
             for ent in doc.ents:
-                    if not ent.kb_id_:
-                        continue
+                if not ent.kb_id_:
+                    print("Skipping result for ", value ,"cause no kb id")
+                    continue
 
-                    metadata = self.extract_dbpedia_metadata(ent.kb_id_)
-                    if metadata and "DBpediametadata" in metadata:
-                        meta = metadata["DBpediametadata"][0]
-                        subject = meta.get('subject')
-                        same = meta.get('sameAs')
-                        abstract = meta.get('abstract')
+                metadata = self.extract_dbpedia_metadata(ent.kb_id_)
+                if metadata and "DBpediametadata" in metadata:
+                    meta = metadata["DBpediametadata"][0]
+                    subject = meta.get('subject')
+                    same = meta.get('sameAs')
+                    abstract = meta.get('abstract')
 
-                        class_results.append({
-                            "Raw text": value,
-                            "Spot": ent.text,
-                            "DBpedia ID": ent.kb_id_,
-                            "Label": meta.get('label'),
-                            "Confidence Score": ent._.dbpedia_raw_result.get('@similarityScore'),
-                            "Abstract": abstract,
-                            "Subject": subject,
-                            "SubClass": same
-                        })
+                    # print("Found DBpedia result for ", individual)
+
+                    class_results.append({
+                        "Raw text": value,
+                        "Spot": ent.text,
+                        "DBpedia ID": ent.kb_id_,
+                        "Label": meta.get('label'),
+                        "Confidence Score": ent._.dbpedia_raw_result.get('@similarityScore'),
+                        "Abstract": abstract,
+                        "Subject": subject,
+                        "SubClass": same
+                    })
 
         return class_results
         
@@ -102,22 +107,20 @@ class DBpedia_linking:
 
         enrichment_results = []
 
-        
         for ontology_class in ontology.classes():
             # print("Processing class : " , ontology_class)
             class_results = self.process_entities(ontology_class)
 
-            if class_results:
+            if len(class_results) > 0:
+                # print("Adding to results : ", class_results)
                 df = pd.DataFrame(class_results)
-
                 enrichment_results.append(df)
-                # with pd.ExcelWriter(self.output_path, mode='a' if os.path.exists(self.output_path) else 'w') as writer:
-                #     df.to_excel(writer, sheet_name=cls.name[:31])
 
-            if enrichment_results:
-                return pd.concat(enrichment_results)
-            else:
-                return pd.DataFrame()
+        if len(enrichment_results) > 0:
+            return pd.concat(enrichment_results)
+        else:
+            print("Finally, there is no dbpedia result")
+            return pd.DataFrame()
         
 
 
