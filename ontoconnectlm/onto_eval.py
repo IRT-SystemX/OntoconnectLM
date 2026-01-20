@@ -32,7 +32,7 @@ class Onto_Evaluator:
         self.onto_uri = ontology_uri
 
 
-    def eval_fair(self) -> pd.DataFrame:
+    def eval_fair(self, output_excel: str) -> pd.DataFrame:
         try:
             headers = {
                 "Content-Type": "application/json; charset=utf-8"
@@ -74,12 +74,12 @@ class Onto_Evaluator:
                 })
 
             df = pd.DataFrame(rows)
-            # with pd.ExcelWriter(output_excel) as writer:
-            #     df.to_excel(writer, index=False, sheet_name="FOOPS Results")
-            #     pd.DataFrame([{
-            #         "Tool": "FOOPS",
-            #         "Overall Score (%)": overall_score_foops
-            #     }]).to_excel(writer, index=False, sheet_name="Summary")
+            with pd.ExcelWriter(output_excel) as writer:
+                df.to_excel(writer, index=False, sheet_name="FOOPS Results")
+                pd.DataFrame([{
+                    "Tool": "FOOPS",
+                    "Overall Score (%)": overall_score_foops
+                }]).to_excel(writer, index=False, sheet_name="Summary")
 
             # print(f"Résultats FOOPS exportés dans {output_excel}")
             return df
@@ -90,7 +90,7 @@ class Onto_Evaluator:
 
 
 
-    def eval_oops(self) -> pd.DataFrame:
+    def eval_oops(self, output_excel: str) -> pd.DataFrame:
         try:
 
             path = os.path.join(os.path.dirname(__file__), self.oops_query_filepath)
@@ -129,12 +129,12 @@ class Onto_Evaluator:
                 })
 
             df = pd.DataFrame(rows)
-            # with pd.ExcelWriter(output_excel) as writer:
-            #     df.to_excel(writer, index=False, sheet_name="OOPS Results")
-            #     pd.DataFrame([{
-            #         "Tool": "OOPS",
-            #         "Total Pitfalls": len(df)
-            #     }]).to_excel(writer, index=False, sheet_name="Summary")
+            with pd.ExcelWriter(output_excel) as writer:
+                df.to_excel(writer, index=False, sheet_name="OOPS Results")
+                pd.DataFrame([{
+                    "Tool": "OOPS",
+                    "Total Pitfalls": len(df)
+                }]).to_excel(writer, index=False, sheet_name="Summary")
 
             # print(f"Résultats OOPS exportés dans {output_excel}")
             return df

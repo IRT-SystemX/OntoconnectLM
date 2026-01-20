@@ -415,14 +415,8 @@ elif selected_tab == "Step 4: Classes Enricher":
 
     if st.button("Generate results files", icon=":material/refresh:"):
         enrich_onto = r"/ontoconnectlm/streamlit/config/classe_enricher/enrich_generated.owl"
-        dbpedia_output = r"/ontoconnectlm/streamlit/config/classe_enricher/dbpedia_EL_results.xlsx"
-        wikidata_output = r"/ontoconnectlm/streamlit/config/classe_enricher/wikidata_EL_results.xlsx"
-        col1, col2, col3 = st.columns(3)
-        with open(dbpedia_output, 'rb') as dbpedia_output_file:
-            dbpedia_output_file_bytes = BytesIO(dbpedia_output_file.read())
 
-        with open(wikidata_output, 'rb') as wikidata_output_file:
-            wikidata_output_file_bytes = BytesIO(wikidata_output_file.read())
+        col1 = st.columns(1)
 
         col1.download_button(
             label="Download enrich_generated owl file",
@@ -432,28 +426,16 @@ elif selected_tab == "Step 4: Classes Enricher":
             type="primary",
             icon=":material/download:",
         )
-        col2.download_button(
-            label="Download dbpedia_EL_results file",
-            data=dbpedia_output_file_bytes,
-            file_name="dbpedia_EL_results.xlsx",
-            on_click="ignore",
-            type="primary",
-            icon=":material/download:",
-        )
-        col3.download_button(
-            label="Download wikidata_EL_results file",
-            data=wikidata_output_file_bytes,
-            file_name="wikidata_EL_results.xlsx",
-            on_click="ignore",
-            type="primary",
-            icon=":material/download:",
-        )
+
 
 # #################################### Step5: Ontology Evaluator ####################################
 elif selected_tab == "Step 5: Ontology Evaluator":
     st.markdown("# Step 5: Ontology Evaluator")
     with st.form("ooe"):
         enrich_onto = r"/ontoconnectlm/streamlit/config/classe_enricher/enrich_generated.owl"
+        fair_output = r"/ontoconnectlm/streamlit/config/classe_enricher/FAIR_EL_results.xlsx"
+        oops_output = r"/ontoconnectlm/streamlit/config/classe_enricher/OOPS_EL_results.xlsx"
+
 
         with open(enrich_onto, "r") as read_file:
             ontology_content = read_file.read()
@@ -462,11 +444,32 @@ elif selected_tab == "Step 5: Ontology Evaluator":
             ontology_content=ontology_content,
             ontology_uri="http://smd#"
         )
-        col1, col2 = st.columns(2)
 
         if st.form_submit_button("Run Eval", icon=":material/play_circle:"):
             st.markdown("### Scaning Ontology Detecting Pitfalls")
-            st.dataframe(evaluator.eval_oops())
+            st.dataframe(evaluator.eval_oops(oops_output))
 
             st.markdown("### Optional: FAIR quality for open data")
-            st.dataframe(evaluator.eval_fair())
+            st.dataframe(evaluator.eval_fair(fair_output))
+            
+    col1, col2, col3, col4 = st.columns(4)
+    with open(fair_output, 'rb') as fair_output_file:
+        fair_output_file_bytes = BytesIO(fair_output_file.read())
+    with open(oops_output, 'rb') as oops_output_file:
+        oops_output_file_bytes = BytesIO(oops_output_file.read())
+    col1.download_button(
+        label="Download FAIR_EL_results.xlsx file",
+        data=fair_output_file_bytes,
+        file_name="FAIR_EL_results.xlsx.xlsx",
+        on_click="ignore",
+        type="primary",
+        icon=":material/download:",
+    )
+    col2.download_button(
+        label="Download OOPS_EL_results file",
+        data=oops_output_file_bytes,
+        file_name="OOPS_EL_results.xlsx",
+        on_click="ignore",
+        type="primary",
+        icon=":material/download:",
+    )
