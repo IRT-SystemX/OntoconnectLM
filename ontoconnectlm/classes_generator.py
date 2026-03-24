@@ -159,7 +159,7 @@ class ClassesGenerator:
         nb_classes = str(nb_classes)
         
         prompt_value = prompt.invoke({
-                "contexte" : self.context_description,
+                "context" : self.context_description,
                 "nb_classes" : nb_classes,
                 "classes" : classes_to_inject
 
