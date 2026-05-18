@@ -280,3 +280,15 @@ curl "http://localhost:2222/rest/annotate?text=Paris&confidence=0.5"
 
 ## Licence  
 This project is under [MPL licence](./LICENSE).  
+
+## Citation
+
+If you use this work, please cite:
+
+```bibtex
+@inproceedings{eaab2026ontoconnectlm,
+  title={OntoConnectLM: Un outil de génération des ontologies guidé par les LLMs et les connaissances ouvertes},
+  author={Amdouni, Emna and Belfadel, Abdelhadi and Gagnant, Maxence and Kattan, Joseph},
+  booktitle={26ÈME CONFÉRENCE FRANCOPHONE SUR L'EXTRACTION ET LA GESTION DES CONNAISSANCES},
+  year={2026}
+}
